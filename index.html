@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Centro de simulación CMMI V3.0</title>
+<style>
+:root{--bg:#faf5ff;--p:#fff;--p2:#f1e7fd;--ln:#e0cdf5;--tx:#2a1248;--mu:#6d5a90;--ac:#b0187f;--ok:#2f7d0f;--wa:#a35f00;--bd:#c62828;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#150d26;--p:#1f1538;--p2:#2a1d4a;--ln:#41306e;--tx:#f5eeff;--mu:#b7a6dc;--ac:#ff7ac6;--ok:#b8f35a;--wa:#ffc857;--bd:#ff6b6b}}
+:root[data-theme="dark"]{--bg:#150d26;--p:#1f1538;--p2:#2a1d4a;--ln:#41306e;--tx:#f5eeff;--mu:#b7a6dc;--ac:#ff7ac6;--ok:#b8f35a;--wa:#ffc857;--bd:#ff6b6b}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*:before,*:after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,"Segoe UI",Roboto,sans-serif}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 18px 40px}
+.top{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--ln)}
+.hex{width:38px;height:38px;display:grid;place-items:center;background:var(--ac);color:var(--bg);clip-path:polygon(25% 3%,75% 3%,100% 50%,75% 97%,25% 97%,0 50%);font-weight:700}
+.top h1{font-size:1.05rem;margin:0;line-height:1.2}.top small{color:var(--mu)}
+.sp{flex:1}#clk{font:600 .95rem ui-monospace,Menlo,monospace;color:var(--ac)}
+.ic{background:var(--p);border:1px solid var(--ln);border-radius:8px;padding:6px 10px}
+.hero{padding:34px 0 18px;max-width:680px}.hero h2{font-size:clamp(1.7rem,4.5vw,2.6rem);line-height:1.15;margin:0 0 10px}
+.hero p{color:var(--mu);margin:0}
+.hub{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:16px;margin-top:10px}
+.card{text-align:left;background:var(--p);border:1px solid var(--ln);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:8px;transition:transform .15s,border-color .15s}
+.card:hover{transform:translateY(-3px);border-color:var(--ac)}
+.card .ph{display:flex;justify-content:space-between;color:var(--mu);font-size:.85rem}
+.card h3{margin:0;font-size:1.15rem}.card ul{margin:0;padding-left:18px;color:var(--mu);font-size:.92rem}
+.go{margin-top:auto;color:var(--ac);font-weight:600}
+.ux{margin-top:26px;padding:16px;background:var(--p2);border-radius:12px}.ux h3{margin:0 0 8px;font-size:1rem}
+.tags{display:flex;flex-wrap:wrap;gap:8px}.tags span{border:1px solid var(--ln);background:var(--p);border-radius:99px;padding:3px 11px;font-size:.85rem}
+.foot{color:var(--mu);font-size:.85rem;margin-top:18px}kbd{border:1px solid var(--ln);border-radius:4px;padding:0 5px;background:var(--p)}
+.mh{display:flex;gap:14px;align-items:flex-start;padding:20px 0 6px;flex-wrap:wrap}.mh h2{margin:0;font-size:1.5rem}.mh p{margin:2px 0 0;color:var(--mu);max-width:640px}
+.btn{background:var(--p);border:1px solid var(--ln);border-radius:9px;padding:8px 14px;font-weight:600}.btn:hover{border-color:var(--ac)}
+.btn.pri{background:var(--ac);color:var(--bg);border-color:var(--ac)}.btn[disabled]{opacity:.45;cursor:not-allowed}
+.panel{background:var(--p);border:1px solid var(--ln);border-radius:14px;padding:16px;margin-top:14px}
+.panel h3{margin:0 0 8px;font-size:1rem}.note{color:var(--mu);font-size:.88rem;margin:8px 0 0}
+.meter,.gauge{height:12px;border-radius:99px;background:var(--p2);overflow:hidden;position:relative}
+.meter i{display:block;height:100%;background:var(--ac);transition:width .35s}
+.big{font-size:2rem;font-weight:700}.big small{font-size:1rem;color:var(--mu);font-weight:500;margin-left:8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;margin-top:12px}
+.pa{background:var(--p2);border:1px solid var(--ln);border-left:5px solid var(--mu);border-radius:10px;padding:9px 11px;text-align:left;display:flex;flex-direction:column}
+.pa b{font-size:.95rem}.pa span{font-size:.82rem;color:var(--mu)}.pa em{font-style:normal;font-weight:600;font-size:.88rem}
+.ok{border-left-color:var(--ok)!important}.wa{border-left-color:var(--wa)!important}.bd{border-left-color:var(--bd)!important}
+.t-ok{color:var(--ok)}.t-wa{color:var(--wa)}.t-bd{color:var(--bd)}
+.cnt{display:flex;gap:18px;flex-wrap:wrap;margin:10px 0}.cnt div{font-size:.9rem;color:var(--mu)}.cnt b{font-size:1.3rem;color:var(--tx);margin-right:4px}
+.sc{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:560px}th,td{border-bottom:1px solid var(--ln);padding:6px 8px;text-align:center;font-size:.92rem}
+th:first-child,td:first-child{text-align:left}
+.cell{width:42px;height:34px;border-radius:8px;border:1px solid var(--ln);background:var(--p2);font-weight:700}
+.cell[data-v="R"]{background:var(--ac);color:var(--bg)}.cell[data-v="A"]{background:var(--ok);color:var(--bg)}.cell[data-v="C"]{background:var(--wa);color:var(--bg)}.cell[data-v="I"]{background:var(--mu);color:var(--bg)}
+.rn{background:none;border:0;text-align:left;padding:4px 0}.rn.sel{color:var(--ac);font-weight:700}
+.row{display:grid;grid-template-columns:1fr auto;gap:2px 10px;width:100%;text-align:left;background:var(--p2);border:1px solid var(--ln);border-radius:10px;padding:8px 12px;margin-bottom:8px;position:relative;overflow:hidden}
+.row i{grid-column:1/3;height:6px;border-radius:9px;background:var(--ac);transition:width .25s}.row.sel{border-color:var(--ac)}
+.sl{display:grid;grid-template-columns:150px 1fr 56px;align-items:center;gap:10px;margin:8px 0}.sl input{width:100%;accent-color:var(--ac)}.sl output{font-weight:700;text-align:right}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.gauge{height:18px}.gauge .f{position:absolute;inset:0 auto 0 0;background:var(--ac);transition:width .25s}.gauge .m{position:absolute;top:0;bottom:0;width:3px;background:var(--tx)}
+.badge{display:inline-block;border-radius:99px;padding:4px 14px;font-weight:700;border:2px solid var(--mu)}
+.badge.ok{border-color:var(--ok);color:var(--ok)}.badge.wa{border-color:var(--wa);color:var(--wa)}.badge.bd{border-color:var(--bd);color:var(--bd)}
+ul.lg{list-style:none;margin:8px 0 0;padding:0;max-height:260px;overflow:auto}ul.lg li{padding:7px 10px;border-left:3px solid var(--ln);background:var(--p2);margin-bottom:6px;border-radius:0 8px 8px 0;font-size:.9rem}
+ul.lg li.n{border-left-color:var(--bd)}
+.fl{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}.fl .btn[aria-pressed="true"]{background:var(--ac);color:var(--bg);border-color:var(--ac)}
+.au{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid var(--ln);flex-wrap:wrap}.au span{color:var(--mu);font-size:.88rem;flex-basis:100%}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--tx);color:var(--bg);padding:9px 16px;border-radius:10px;opacity:0;transition:.2s;pointer-events:none;max-width:90vw;text-align:center}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+.hero{background:linear-gradient(120deg,color-mix(in srgb,var(--ac) 20%,transparent),transparent 65%);border-radius:18px;padding:30px 24px;margin-top:16px}
+.route{display:flex;gap:6px;overflow-x:auto;padding:14px 2px 6px;align-items:flex-start}
+.nd{flex:1;min-width:92px;background:none;border:0;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;font-size:.8rem;color:var(--mu);position:relative}
+.nd:before{content:"";position:absolute;top:19px;left:-50%;width:100%;height:3px;background:var(--ln);z-index:0}.nd:first-child:before{display:none}
+.nd b{z-index:1;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--p);border:2px solid var(--ln);color:var(--tx)}
+.nd.sim b{border-color:var(--ac);box-shadow:0 0 0 4px color-mix(in srgb,var(--ac) 22%,transparent)}.nd.sim{color:var(--tx);cursor:pointer}
+.nd.vis b{background:var(--ok);color:#150d26;border-color:var(--ok)}.nd:not(.sim){cursor:default;opacity:.6}
+.pg{display:flex;align-items:center;gap:12px;margin:8px 0 0;color:var(--mu);font-size:.9rem}.pg .meter{flex:1;max-width:260px}
+.ring{display:flex;align-items:center;gap:18px;flex-wrap:wrap}.ring text{fill:var(--tx);font:700 26px system-ui}
+.cf{position:fixed;top:35%;left:50%;font-size:1.5rem;pointer-events:none;animation:cf 1.2s ease-out forwards;z-index:9}
+@keyframes cf{to{transform:translate(var(--x),var(--y)) rotate(360deg);opacity:0}}
+@media (prefers-reduced-motion:reduce){.cf{display:none}}
+.nd.bad b{background:var(--bd);color:#150d26;border-color:var(--bd)}.fl label{display:flex;gap:6px;align-items:center}.fl input{accent-color:var(--ac);width:18px;height:18px}.ch{display:block;width:100%;text-align:left;margin:8px 0}
+[hidden]{display:none!important}
+@media (max-width:560px){.sl{grid-template-columns:1fr 56px}.sl label{grid-column:1/3}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head>
+<body><div class="wrap">
+<div class="top"><div class="hex" aria-hidden="true">C</div><div><h1>Centro de simulación CMMI V3.0</h1><small>Colegio Bautista Camino de Vida · 8 módulos</small></div><div class="sp"></div><span id="clk" aria-label="Hora actual">--:--:--</span><button class="ic" id="th" aria-label="Cambiar tema claro u oscuro">◐</button></div>
+
+<main id="hub">
+<section class="hero"><h2>Practica la ruta CMMI antes de aplicarla</h2><p>Cada módulo convierte una fase de los documentos del proyecto en una simulación: cambia datos, mira el efecto al instante y compara con lo que el equipo registró.</p></section>
+<div class="route" id="route" aria-label="Ruta CMMI de 7 fases"></div><div class="pg"><span id="pt">Explorados 0 de 8</span><div class="meter"><i id="pb" style="width:0"></i></div></div>
+<div class="hub" id="cards"></div>
+<section class="ux"><h3>Principios UI/UX aplicados</h3><div class="tags"><span>Visibilidad del estado</span><span>Feedback inmediato</span><span>Prevención de errores</span><span>Reconocer en vez de recordar</span><span>Consistencia de controles</span><span>Atajos de teclado</span><span>Foco visible y contraste</span><span>Movimiento reducido</span><span>Diseño adaptable a móvil</span></div></section>
+<p class="foot">Atajos: <kbd>1</kbd>–<kbd>8</kbd> abrir módulo · <kbd>Esc</kbd> volver. Datos tomados de los entregables del proyecto; fases 4 y 7 no se simulan.</p>
+</main>
+
+<section id="mod" hidden>
+<div class="mh"><button class="btn" id="bk">← Volver al centro</button><div><h2 id="mt"></h2><p id="md"></p></div></div>
+<div id="mb"></div>
+</section></div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const $=s=>document.querySelector(s),H=(e,h)=>{e.innerHTML=h};
+const toast=m=>{const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.i);toast.i=setTimeout(()=>t.classList.remove('on'),2400)};
+setInterval(()=>{$('#clk').textContent=new Date().toLocaleTimeString('es',{hour12:false})},1000);
+$('#th').onclick=()=>{const r=document.documentElement,d=getComputedStyle(r).getPropertyValue('--bg').trim()==='#150d26';r.dataset.theme=d?'light':'dark'};
+
+const GAP=[["GOV","Gobierno",1],["PLAN","Planificación",1],["EST","Estimación",1],["MC","Monitoreo y control",0],["RDM","Requerimientos",1],["RSK","Gestión de riesgo",0],["CM","Configuración",0],["PQA","Calidad de procesos",0],["DATA","Gestión de datos",0],["TS","Solución técnica",1],["PI","Integración de producto",0],["VV","Verificación y validación",0],["OT","Formación",0],["PAD","Activos de proceso",1],["CAR","Análisis causal",0]];
+const ROLES=["Directora","Líder de proyecto","Backend","IA"];
+const RACI=[["Definir objetivos y alcance","ARCC"],["Planificar sprints y cronograma","IRCC"],["Diseñar y desarrollar el sistema web","IARC"],["Diseñar y validar el modelo predictivo","IACR"],["Gestionar datos académicos y de conducta","ACRR"],["Comunicar con docentes y tutores","ARII"],["Aprobar entregables por fase","ARII"],["Gestionar riesgos y cambios","IACC"]];
+const CH={A:["Reunión de aprobación del CDC","al cierre de cada fase"],R:["Reunión de trabajo del equipo","semanal"],C:["Comunicación interna del equipo","según necesidad"],I:["Reunión de seguimiento del CDC","quincenal"]};
+const PERT=[["Módulo académico",8,12,18],["Notas y conducta",6,10,15],["Repositorio de datos (RF07)",4,7,12],["Entrenamiento y validación del modelo",10,15,25],["Dashboard y notificaciones",5,8,13],["Infraestructura y piloto",4,6,10]];
+const AUD=[["Gobernanza","c",""],["Planificación","c",""],["Estimación","m","NC-03: la estimación de horarios no se recalibró con datos reales."],["Gestión de riesgos","m","NC-02: R03 se materializó y la respuesta prevista no evitó el retraso."],["Requerimientos","m","NC-05: el cambio de alcance del piloto no pasó por control de cambios."],["Configuración","c",""],["Monitoreo y control","m","NC-04: la desviación se detectó al final del sprint."],["Formación","c",""],["Solución técnica","M","NC-01: el módulo de autenticación rechaza credenciales correctas."],["Integración de producto","m","NC-07: no hay prueba de regresión del acceso ni automatización."],["Verificación y validación","m","NC-08: no se ejecutó la validación con usuarios (SUS)."],["Datos","m","NC-06: el repositorio del piloto excede el alcance delimitado."]];
+
+/* Fase 1 */
+function m1(c){let s=GAP.map(g=>g[2]),ps=0;const N=['No cumple','Parcial','Cumple'],C=['bd','wa','ok'];
+const draw=f=>{const t=s.reduce((a,b)=>a+b,0),sc=Math.round(t/30*100),n=k=>s.filter(x=>x===k).length;
+const lv=sc<40?'Inicial / ad hoc':sc<75?'Avanzando hacia ML2':'Listo para autoevaluar ML2';
+H(c,`<div class="panel"><div class="ring"><svg viewBox="0 0 120 120" width="130" role="img" aria-label="Avance ${sc}%"><circle cx="60" cy="60" r="50" fill="none" stroke="var(--p2)" stroke-width="12"/><circle cx="60" cy="60" r="50" fill="none" stroke="var(--ac)" stroke-width="12" stroke-linecap="round" stroke-dasharray="${(sc*3.1416).toFixed(1)} 314" transform="rotate(-90 60 60)"/><text x="60" y="69" text-anchor="middle">${sc}%</text></svg><div class="big" style="font-size:1.4rem">${lv}</div></div>
+<div class="cnt"><div><b class="t-ok">${n(2)}</b>cumplen</div><div><b class="t-wa">${n(1)}</b>parciales</div><div><b class="t-bd">${n(0)}</b>no cumplen</div></div>
+<p class="note">Toca un área para cambiar su estado: No cumple → Parcial → Cumple. El estado inicial es el diagnóstico real de la Fase 1. Los tramos del indicador son criterio del simulador.</p>
+<div class="grid">${GAP.map((g,i)=>`<button class="pa ${C[s[i]]}" data-i="${i}"><b>${g[0]}</b><span>${g[1]}</span><em class="t-${C[s[i]]}">${N[s[i]]}</em></button>`).join('')}</div>
+<p><button class="btn" id="rs">Restablecer diagnóstico real</button></p></div>`);
+if(sc>=75&&ps<75)burst();ps=sc;if(f!=null)c.querySelector(`[data-i="${f}"]`).focus();
+c.querySelectorAll('.pa').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;s[i]=(s[i]+1)%3;draw(i);toast(`${GAP[i][0]}: ${N[s[i]]}`)});
+$('#rs').onclick=()=>{s=GAP.map(g=>g[2]);draw();toast('Diagnóstico restablecido')}};draw()}
+
+/* Fase 2 */
+function m2(c){const R=RACI.map(r=>r[1].split(''));let sel=0;const O=['','R','A','C','I'];
+const draw=f=>{const chk=r=>{const a=r.filter(x=>x==='A').length,rr=r.includes('R');return !rr?'⚠ falta quien ejecute (R)':a===0?'⚠ falta quien apruebe (A)':a>1?'⚠ más de un A':'✓ completa'};
+H(c,`<div class="panel"><h3>Matriz de responsabilidades</h3><p class="note">Toca una celda para rotar R, A, C, I o vacío. Toca el nombre de una actividad para ver la comunicación que se deriva.</p>
+<div class="sc"><table><tr><th>Actividad</th>${ROLES.map(x=>`<th>${x}</th>`).join('')}<th>Revisión</th></tr>
+${RACI.map((r,i)=>`<tr><td><button class="rn ${i==sel?'sel':''}" data-s="${i}">${r[0]}</button></td>${R[i].map((v,j)=>`<td><button class="cell" data-r="${i}" data-c="${j}" data-v="${v}" aria-label="${ROLES[j]}: ${v||'vacío'}">${v}</button></td>`).join('')}<td class="${chk(R[i])[0]=='✓'?'t-ok':'t-wa'}" style="font-size:.85rem">${chk(R[i])}</td></tr>`).join('')}</table></div></div>
+<div class="panel" aria-live="polite"><h3>Comunicación derivada: ${RACI[sel][0]}</h3>${R[sel].map((v,j)=>v?`<p style="margin:6px 0"><b>${ROLES[j]}</b> (${v}) → ${CH[v][0]}, ${CH[v][1]}.</p>`:'').join('')||'<p class="note">Sin roles asignados.</p>'}
+<p class="note">Canales y frecuencias del Plan de Comunicación (Fase 2). La actividad «Planificar sprints» aparece sin A en el documento original.</p></div>`);
+if(f)c.querySelector(f).focus();
+c.querySelectorAll('.cell').forEach(b=>b.onclick=()=>{const i=+b.dataset.r,j=+b.dataset.c;R[i][j]=O[(O.indexOf(R[i][j])+1)%5];sel=i;draw(`[data-r="${i}"][data-c="${j}"]`)});
+c.querySelectorAll('.rn').forEach(b=>b.onclick=()=>{sel=+b.dataset.s;draw(`[data-s="${sel}"]`)})};draw()}
+
+/* Fase 3 */
+function m3(c){const A=PERT.map(a=>a.slice()),E=a=>(a[1]+4*a[2]+a[3])/6;let k=0;
+H(c,`<div class="two"><div class="panel"><h3>Actividades</h3><div id="pr"></div></div>
+<div class="panel"><h3 id="pn"></h3><div class="sl"><label for="s1">Optimista</label><input type="range" id="s1" min="1" max="40"><output id="o1"></output></div>
+<div class="sl"><label for="s2">Más probable</label><input type="range" id="s2" min="1" max="40"><output id="o2"></output></div>
+<div class="sl"><label for="s3">Pesimista</label><input type="range" id="s3" min="1" max="40"><output id="o3"></output></div>
+<p style="margin:10px 0 0">Duración esperada: <b id="ev" class="big"></b></p><p class="note">E = (O + 4·P + Pe) / 6. Desviación = (Pe − O) / 6.</p></div></div>
+<div class="panel" aria-live="polite"><h3>Proyecto completo</h3><div class="big" id="tt"></div><div class="meter"><i id="tb"></i></div><p id="tm" style="margin:8px 0 0"></p><p class="note">Ventana prevista: 12 semanas (60 días hábiles). Valores iniciales: estimación de la Fase 3.</p></div>
+<div class="panel"><h3>Simulación Monte Carlo</h3><button class="btn pri" id="mc">Simular 1000 corridas</button><div id="mcr" aria-live="polite" style="margin-top:12px"></div><p class="note">Usa una distribución triangular con tus valores O, P y Pe: aproximación del simulador.</p></div>`);
+const sync=()=>{[1,2,3].forEach(j=>{$('#s'+j).value=A[k][j];$('#o'+j).textContent=A[k][j]});$('#pn').textContent=A[k][0]};
+const upd=()=>{H($('#pr'),A.map((a,i)=>`<button class="row ${i==k?'sel':''}" data-i="${i}"><span>${a[0]}</span><b>${E(a).toFixed(1)} d</b><i style="width:${E(a)/26*100}%"></i></button>`).join(''));
+$('#pr').querySelectorAll('.row').forEach(b=>b.onclick=()=>{k=+b.dataset.i;sync();upd()});
+const t=A.reduce((s,a)=>s+E(a),0),sg=Math.sqrt(A.reduce((s,a)=>s+((a[3]-a[1])/6)**2,0));
+$('#ev').textContent=E(A[k]).toFixed(1)+' d (±'+((A[k][3]-A[k][1])/6).toFixed(1)+')';
+$('#tt').innerHTML=t.toFixed(1)+' días<small>±'+sg.toFixed(1)+'</small>';$('#tb').style.width=Math.min(100,t/60*100)+'%';
+$('#tm').innerHTML=t<=60?`<span class="t-ok">✓ Cabe en la ventana</span>: sobran ${(60-t).toFixed(1)} días.`:`<span class="t-bd">⚠ Excede la ventana</span> por ${(t-60).toFixed(1)} días: recorta alcance o replanifica.`};
+[1,2,3].forEach(j=>$('#s'+j).oninput=e=>{let v=+e.target.value,a=A[k];a[j]=v;if(j===1&&a[2]<v)a[2]=v;if(j===1&&a[3]<v)a[3]=v;if(j===2){if(a[1]>v)a[1]=v;if(a[3]<v)a[3]=v}if(j===3){if(a[2]>v)a[2]=v;if(a[1]>v)a[1]=v}sync();upd()});
+$('#mc').onclick=()=>{const R=[];for(let n=0;n<1000;n++){let t=0;A.forEach(a=>{const o=a[1],p=a[2],e=a[3],d=e-o,u=Math.random();t+=d?(u<(p-o)/d?o+Math.sqrt(u*d*(p-o)):e-Math.sqrt((1-u)*d*(e-p))):o});R.push(t)}
+const mn=Math.min(...R),mx=Math.max(...R),B=Array(12).fill(0);R.forEach(x=>B[Math.min(11,Math.floor((x-mn)/(mx-mn||1)*12))]++);const mb=Math.max(...B);
+H($('#mcr'),`<div style="display:flex;align-items:flex-end;gap:4px;height:110px">${B.map((b,i)=>{const lo=mn+(mx-mn)*i/12;return `<div title="${lo.toFixed(0)} d: ${b}" style="flex:1;height:${b/mb*100}%;background:${lo+(mx-mn)/24<=60?'var(--ok)':'var(--bd)'};border-radius:4px 4px 0 0"></div>`}).join('')}</div><p>Probabilidad de terminar en 60 días o menos: <b>${(R.filter(x=>x<=60).length/10).toFixed(1)}%</b> · rango ${mn.toFixed(0)} a ${mx.toFixed(0)} días</p>`)};
+sync();upd()}
+
+/* Fase 5 */
+function m4(c){let nota=80,inc=1,med=35,alt=60,cur=null,fin=false,log=[];const N=['Riesgo bajo','Riesgo medio','Riesgo alto'],K=['ok','wa','bd'];
+const sc=()=>Math.min(100,Math.max(0,Math.round((100-nota)*1.1+inc*5))),cat=s=>s>=alt?2:s>=med?1:0;
+H(c,`<div class="two"><div class="panel"><h3>Datos del estudiante</h3>
+<div class="sl"><label for="n">Promedio de notas</label><input type="range" id="n" min="0" max="100" value="${nota}"><output id="no"></output></div>
+<div class="sl"><label for="i">Incidencias de conducta</label><input type="range" id="i" min="0" max="10" value="${inc}"><output id="io"></output></div>
+<h3 style="margin-top:14px">Umbrales (Directora)</h3>
+<div class="sl"><label for="md">Medio desde</label><input type="range" id="md" min="10" max="70" value="${med}"><output id="mo"></output></div>
+<div class="sl"><label for="al">Alto desde</label><input type="range" id="al" min="30" max="95" value="${alt}"><output id="ao"></output></div>
+<div class="fl"><button class="btn pri" id="rg">Registrar dato</button><button class="btn" id="tr">Trasladar estudiante</button><button class="btn" id="rs">Reiniciar</button></div></div>
+<div class="panel" aria-live="polite"><h3>Vista previa y predicción vigente</h3><div class="gauge" role="img" aria-label="Puntaje de riesgo"><div class="f" id="gf"></div><div class="m" id="g1"></div><div class="m" id="g2"></div></div>
+<p style="margin:10px 0">Puntaje: <b id="sv"></b> → <span id="pv" class="badge"></span></p>
+<p style="margin:0">Vigente: <span id="cv" class="badge">Sin predicción</span></p>
+<p class="note">Modelo ilustrativo: la ERS no fija el algoritmo (decisión D-A6). Las reglas de transición y notificación sí vienen de CU-03, CU-05, CU-06 y RF11.</p></div></div>
+<div class="panel"><h3>Bitácora de transiciones</h3><ul class="lg" id="lg"><li>Registra un dato para generar la primera predicción.</li></ul></div>`);
+const upd=()=>{const s=sc(),t=cat(s);$('#no').textContent=nota;$('#io').textContent=inc;$('#mo').textContent=med;$('#ao').textContent=alt;$('#sv').textContent=s;
+$('#gf').style.width=s+'%';$('#g1').style.left=med+'%';$('#g2').style.left=alt+'%';const p=$('#pv');p.textContent=N[t];p.className='badge '+K[t]};
+const add=(h,n)=>{const l=$('#lg');if(log.length===0)l.innerHTML='';log.unshift(1);l.insertAdjacentHTML('afterbegin',`<li class="${n?'n':''}">${h}</li>`)};
+const reg=why=>{if(fin)return;const v=$('#cv');v.textContent='Calculando…';v.className='badge';setTimeout(()=>{const s=sc(),t=cat(s),pv=cur;cur=t;v.textContent=N[t];v.className='badge '+K[t];
+add(`${why}: <b>${pv==null?'Sin predicción':N[pv]} → ${N[t]}</b> (puntaje ${s}).`);
+if(t===2&&pv!==2){add('🔔 Notificación enviada al docente y al tutor, con contenido mínimo y enlace al panel.',1);toast('Notificación de riesgo alto enviada')}
+else if(t===2){add('Sin notificación duplicada: el estudiante ya estaba en riesgo alto (RF11).');toast('Sin notificación duplicada')}
+else toast('Predicción actualizada: '+N[t])},450)};
+$('#n').oninput=e=>{nota=+e.target.value;upd()};$('#i').oninput=e=>{inc=+e.target.value;upd()};
+$('#md').oninput=e=>{med=+e.target.value;if(alt<=med){alt=med+5;$('#al').value=alt}upd()};
+$('#al').oninput=e=>{alt=+e.target.value;if(med>=alt){med=alt-5;$('#md').value=med}upd()};
+['md','al'].forEach(x=>$('#'+x).onchange=()=>{if(cur!=null&&!fin)reg('Umbrales actualizados')});
+$('#rg').onclick=()=>reg('Dato registrado');
+$('#tr').onclick=()=>{if(fin)return;fin=true;add('Estudiante trasladado → <b>Fin</b>: se conserva el historial y no se calculan nuevas predicciones (RF20).');['rg','tr'].forEach(x=>$('#'+x).disabled=true);toast('Estudiante trasladado')};
+$('#rs').onclick=()=>m4(c);upd()}
+
+/* Fase 6 */
+function m5(c){let f='t',p=88.6,r=87,te=89.4;const lbl={c:'Conforme',m:'NC menor',M:'NC mayor'},col={c:'ok',m:'wa',M:'bd'};
+H(c,`<div class="panel"><h3>Auditoría de procesos y producto</h3><div class="cnt" id="ac"></div><div class="fl" id="fl"></div><div id="al" aria-live="polite"></div></div>
+<div class="panel"><h3>Validación del modelo predictivo</h3>
+<div class="sl"><label for="p">Precisión</label><input type="range" id="p" min="60" max="100" step="0.1" value="${p}"><output id="po"></output></div>
+<div class="sl"><label for="r">Sensibilidad</label><input type="range" id="r" min="60" max="100" step="0.1" value="${r}"><output id="ro"></output></div>
+<div class="sl"><label for="te">Exactitud en prueba</label><input type="range" id="te" min="60" max="100" step="0.1" value="${te}"><output id="to"></output></div>
+<p style="margin:10px 0" aria-live="polite">F1 = <b class="big" id="f1"></b> · Brecha frente a entrenamiento (91.1 %): <b id="gp"></b></p>
+<p class="note">Un falso negativo es un estudiante en riesgo que no se detecta, por eso la métrica M7 prioriza la sensibilidad. Valores iniciales: prueba independiente de la Fase 6. Alerta de brecha mayor a 5 puntos: regla orientativa.</p></div>
+<div class="panel"><h3>Matriz de confusión (200 estudiantes simulados)</h3><div class="sl"><label for="th2">Umbral de alerta</label><input type="range" id="th2" min="10" max="90" value="50"><output id="thv"></output></div><div id="cmv" aria-live="polite"></div><p class="note">Al subir el umbral hay menos falsas alarmas, pero se escapan más estudiantes en riesgo. Datos sintéticos del simulador.</p></div>`);
+const drawA=()=>{const n=k=>AUD.filter(a=>a[1]===k).length,T=AUD.length;
+H($('#ac'),`<div><b class="t-ok">${n('c')}</b>conformes (${Math.round(n('c')/T*100)}%)</div><div><b class="t-wa">${n('m')}</b>NC menores</div><div><b class="t-bd">${n('M')}</b>NC mayor</div><div><b>${Math.round((T-n('M'))/T*100)}%</b>sin NC mayor</div>`);
+H($('#fl'),[['t','Todas'],['c','Conformes'],['m','NC menores'],['M','NC mayor']].map(x=>`<button class="btn" data-f="${x[0]}" aria-pressed="${f===x[0]}">${x[1]}</button>`).join(''));
+H($('#al'),AUD.filter(a=>f==='t'||a[1]===f).map(a=>`<div class="au"><b>${a[0]}</b><b class="t-${col[a[1]]}">${lbl[a[1]]}</b>${a[2]?`<span>${a[2]}</span>`:''}</div>`).join(''));
+$('#fl').querySelectorAll('button').forEach(b=>b.onclick=()=>{f=b.dataset.f;drawA();$('#fl').querySelector(`[data-f="${f}"]`).focus()})};
+const upd=()=>{$('#po').textContent=p.toFixed(1)+'%';$('#ro').textContent=r.toFixed(1)+'%';$('#to').textContent=te.toFixed(1)+'%';
+$('#f1').textContent=(2*p*r/(p+r)).toFixed(1)+'%';const g=91.1-te;const e=$('#gp');e.textContent=g.toFixed(1)+' pts'+(g>5?' ⚠ revisa sobreajuste':' ✓');e.className=g>5?'t-bd':'t-ok'};
+[['p',v=>p=v],['r',v=>r=v],['te',v=>te=v]].forEach(x=>$('#'+x[0]).oninput=e=>{x[1](+e.target.value);upd()});const D=[...Array(200)].map((_,i)=>{const z=Math.abs(Math.sin(i*12.9898)*43758.5453)%1,y=i%10<3;return[y,y?45+50*z:10+60*z]});
+const cm=()=>{const t=+$('#th2').value;let a=0,b=0,d=0,e=0;D.forEach(x=>{const y=x[0],q=x[1]>=t;if(y&&q)a++;else if(q)b++;else if(y)d++;else e++});const P=a/(a+b||1),R=a/(a+d||1);
+H($('#cmv'),`<div class="grid" style="grid-template-columns:1fr 1fr;max-width:340px"><div class="pa ok"><b>${a}</b><span>En riesgo detectados</span></div><div class="pa wa"><b>${b}</b><span>Falsas alarmas</span></div><div class="pa bd"><b>${d}</b><span>En riesgo sin detectar</span></div><div class="pa ok"><b>${e}</b><span>Sin riesgo correctos</span></div></div><p>Precisión <b>${(P*100).toFixed(1)}%</b> · Sensibilidad <b>${(R*100).toFixed(1)}%</b></p>`);$('#thv').textContent=t};
+$('#th2').oninput=cm;cm();drawA();upd()}
+
+/* Pipeline */
+function m6(c){const ST=['Commit','Pruebas unitarias','Regresión de acceso','Revisión entre pares','Integración a main','Despliegue en pruebas','Piloto'];let on=false,ok=0,cap=0,esc=0,S=ST.map(()=>'p');
+H(c,`<div class="panel"><div class="fl"><label><input type="checkbox" id="k1" checked> Prueba de regresión de acceso</label><label><input type="checkbox" id="k2" checked> Revisión entre pares</label><label><input type="checkbox" id="k3"> Inyectar defecto de autenticación (H-01)</label></div>
+<div class="route" id="ps"></div><p id="pm" aria-live="polite" style="min-height:3em"></p><button class="btn pri" id="go">Ejecutar pipeline</button>
+<div class="cnt"><div><b id="c1">0</b>exitosos</div><div><b id="c2">0</b>defectos atrapados</div><div><b id="c3">0</b>defectos escapados</div></div><p class="note">Basado en el documento DevOps y en NC-01 y NC-07 de la auditoría: sin regresión de acceso el defecto llega al piloto.</p></div>`);
+const draw=()=>H($('#ps'),ST.map((n,j)=>`<div class="nd ${S[j]=='o'?'vis':S[j]=='f'?'bad':S[j]=='s'?'':'sim'}"><b>${S[j]=='o'?'✓':S[j]=='f'?'✕':S[j]=='s'?'–':j+1}</b>${n}${S[j]=='s'?' (omitida)':''}</div>`).join(''));
+const msg=(t,k)=>H($('#pm'),`<span class="t-${k}">${t}</span>`),cnt=()=>{$('#c1').textContent=ok;$('#c2').textContent=cap;$('#c3').textContent=esc;on=false};
+draw();
+$('#go').onclick=()=>{if(on)return;on=true;S=ST.map(()=>'p');msg('Ejecutando…','ac');const R=$('#k1').checked,V=$('#k2').checked,D=$('#k3').checked;let i=0;
+const step=()=>{const j=i++;if(j>=ST.length){ok++;msg(V?'Versión desplegada en el piloto sin defectos.':'Desplegado, pero omitiste la revisión entre pares: PR 2.1 pide un revisor distinto del autor.',V?'ok':'wa');cnt();return}
+if((j==2&&!R)||(j==3&&!V))S[j]='s';
+else if(j==2&&D){S[j]='f';cap++;draw();msg('Bloqueado: la regresión detectó el defecto H-01 antes de integrar. El pipeline cumplió su función.','ok');cnt();toast('Defecto atrapado');return}
+else if(j==6&&D){S[j]='f';esc++;draw();msg('El defecto llegó al piloto: credenciales correctas rechazadas (NC-01). Sin regresión de acceso nadie lo detectó antes.','bd');cnt();toast('Defecto escapado al piloto');return}
+else S[j]='o';draw();setTimeout(step,550)};step()}}
+
+/* Modo líder */
+const EV=[["Datos insuficientes","El repositorio histórico tiene pocos registros para entrenar el modelo.",[["Pausar y depurar los datos",8,-10,10],["Entrenar con lo que hay",0,5,-15],["Pedir más datos al colegio",4,-5,5]]],
+["Equipo con poca disponibilidad","Se acumulan retrasos en el módulo de notas.",[["Usar el buffer del cronograma",3,-5,0],["Recortar requerimientos de prioridad baja",5,5,-3],["Pedir horas extra",-5,8,-12]]],
+["Cambio de alcance","La Directora pide extender el piloto a seis grados.",[["Tramitar por control de cambios",10,-6,0],["Aceptar sin trámite",-8,-2,-5],["Mantener primer grado",2,4,0]]],
+["Resistencia de docentes","Algunos docentes prefieren seguir con el cuaderno.",[["Taller de uso de 2 horas",6,-4,6],["Enviar el manual por correo",1,0,-3],["Esperar a que se adapten",-6,2,-8]]],
+["Falla de autenticación","Al integrar, el acceso rechaza credenciales correctas.",[["Corregir y añadir prueba de regresión",10,-8,12],["Aplicar un parche rápido",-3,-2,-6],["Posponer la corrección",-10,4,-12]]],
+["Caída de la infraestructura","El servidor en la nube deja de responder.",[["Restaurar el respaldo",6,-3,4],["Reconstruir a mano",0,-10,0],["Cambiar de proveedor",2,-12,2]]]];
+function m7(c){let ev,r,m,s,q;const cl=x=>Math.max(0,Math.min(100,x)),bar=(l,v)=>`<p class="note" style="margin:8px 0 2px">${l}: ${v}</p><div class="meter"><i style="width:${v}%"></i></div>`;
+const show=()=>{const hd=`<div class="panel">${bar('Madurez',m)}${bar('Holgura de cronograma',s)}${bar('Calidad',q)}</div><div class="panel" aria-live="polite">`;
+if(r>=6){const w=m>=60&&s>=35&&q>=50;H(c,hd+`<h3>${w?'Proyecto listo para autoevaluar ML2':'Aún no estás listo para ML2'}</h3><p>${w?'Equilibraste madurez, plazo y calidad.':'Para ML2 se pedía madurez de 60 o más, holgura de 35 o más y calidad de 50 o más.'}</p><button class="btn pri" id="rp">Jugar de nuevo</button></div>`);$('#rp').onclick=start;if(w)burst();return}
+const e=ev[r];H(c,hd+`<h3>Sprint ${r+1} de 6 · ${e[0]}</h3><p>${e[1]}</p>${e[2].map((o,k)=>`<button class="btn ch" data-k="${k}">${o[0]}</button>`).join('')}</div>`);
+c.querySelectorAll('.ch').forEach(b=>b.onclick=()=>{const o=e[2][+b.dataset.k];m=cl(m+o[1]);s=cl(s+o[2]);q=cl(q+o[3]);r++;toast(`Madurez ${o[1]>0?'+':''}${o[1]} · cronograma ${o[2]>0?'+':''}${o[2]} · calidad ${o[3]>0?'+':''}${o[3]}`);show();const f=c.querySelector('.ch');if(f)f.focus()})};
+const start=()=>{ev=EV.slice().sort(()=>Math.random()-.5);r=0;m=20;s=50;q=50;show()};start()}
+
+/* Cohorte */
+function m8(c){let med=35,alt=60,ns=0,so=0;const N=['Riesgo bajo','Riesgo medio','Riesgo alto'],K=['ok','wa','bd'];
+const S=[...Array(24)].map((_,i)=>({n:'E'+(i+1),g:'ABC'[i%3],s:Math.round(10+(Math.abs(Math.sin(i*7.7)*9999)%1)*65),i:Math.round((Math.abs(Math.sin(i*3.3)*9999)%1)*4)}));
+const r=x=>Math.min(100,x.s+x.i*5),cat=v=>v>=alt?2:v>=med?1:0,P=S.map(x=>cat(r(x)));
+H(c,`<div class="panel"><div class="sl"><label for="u1">Medio desde</label><input type="range" id="u1" min="10" max="70" value="${med}"><output id="o1"></output></div><div class="sl"><label for="u2">Alto desde</label><input type="range" id="u2" min="30" max="95" value="${alt}"><output id="o2"></output></div>
+<div class="fl"><button class="btn" id="so" aria-pressed="false">Ordenar por riesgo</button></div><div class="cnt" id="sm" aria-live="polite"></div></div><div class="panel"><h3>Estudiantes</h3><p class="note">Toca un estudiante para registrar una incidencia. Si entra a riesgo alto se envía una notificación.</p><div class="grid" id="cc"></div></div>`);
+const dr=()=>{$('#o1').textContent=med;$('#o2').textContent=alt;const L=S.map((x,k)=>[x,k,cat(r(x))]);L.forEach(x=>{if(x[2]===2&&P[x[1]]!==2)ns++;P[x[1]]=x[2]});if(so)L.sort((a,b)=>r(b[0])-r(a[0]));
+const n=t=>L.filter(x=>x[2]===t).length;H($('#sm'),`<div><b class="t-ok">${n(0)}</b>bajo</div><div><b class="t-wa">${n(1)}</b>medio</div><div><b class="t-bd">${n(2)}</b>alto</div><div><b>${ns}</b>notificaciones</div>`+['A','B','C'].map(g=>`<div>Grupo ${g}: <b>${L.filter(x=>x[0].g===g&&x[2]===2).length}</b> en alto</div>`).join(''));
+H($('#cc'),L.map(x=>`<button class="pa ${K[x[2]]}" data-k="${x[1]}"><b>${x[0].n} · grupo ${x[0].g}</b><span>${x[0].i} incidencias</span><em class="t-${K[x[2]]}">${N[x[2]]} · ${r(x[0])}</em></button>`).join(''));
+$('#cc').querySelectorAll('.pa').forEach(b=>b.onclick=()=>{const k=+b.dataset.k;S[k].i++;dr();toast(S[k].n+': incidencia registrada');$('#cc').querySelector(`[data-k="${k}"]`).focus()})};
+$('#u1').oninput=e=>{med=+e.target.value;if(alt<=med){alt=med+5;$('#u2').value=alt}dr()};$('#u2').oninput=e=>{alt=+e.target.value;if(med>=alt){med=alt-5;$('#u1').value=med}dr()};
+$('#so').onclick=e=>{so=1-so;e.target.setAttribute('aria-pressed',so==1);dr()};dr()}
+
+const M=[
+{i:'📋',f:'Fase 1',t:'Diagnóstico inicial',d:'Evalúa las 15 áreas de práctica y mira cómo sube la madurez del proyecto.',b:['Gap analysis: cumple, parcial, no cumple','Indicador de avance hacia ML2'],fn:m1},
+{i:'🧭',f:'Fase 2',t:'Roles y comunicación (RACI)',d:'Asigna R, A, C e I y descubre qué canal y frecuencia se derivan.',b:['Validación automática de cada fila','Plan de comunicación derivado'],fn:m2},
+{i:'🗓️',f:'Fase 3',t:'Estimación PERT',d:'Ajusta escenarios y comprueba si el proyecto cabe en 12 semanas.',b:['6 actividades con sliders','Total, desviación y margen'],fn:m3},
+{i:'🎯',f:'Fase 5',t:'Clasificación de riesgo académico',d:'Registra notas y conducta, mueve umbrales y observa transiciones y alertas.',b:['Diagrama de estados en vivo','Notificación sin duplicados (RF11)'],fn:m4},
+{i:'🛡️',f:'Fase 6',t:'Auditoría y validación del modelo',d:'Filtra no conformidades y calcula F1 con las métricas de la prueba.',b:['12 áreas auditadas','F1 y brecha de sobreajuste'],fn:m5},
+{i:'🚀',f:'DevOps',t:'Pipeline CI/CD',d:'Ejecuta el pipeline y comprueba si la regresión de acceso atrapa el defecto H-01.',b:['Etapas animadas','Defectos atrapados o escapados'],fn:m6},
+{i:'🎮',f:'Modo líder',t:'Dirige el proyecto 6 sprints',d:'Decide ante los riesgos del registro y mira cómo cambian madurez, cronograma y calidad.',b:['Eventos en orden aleatorio','Veredicto hacia ML2'],fn:m7},
+{i:'👥',f:'Fase 5',t:'Cohorte de estudiantes',d:'Mueve los umbrales y observa cómo cambian 24 estudiantes y tres grupos.',b:['Resumen por grupo','Notificaciones sin duplicar'],fn:m8}];
+$('#cards').innerHTML=M.map((m,i)=>`<button class="card" data-i="${i}"><div class="ph"><span>${m.i} ${m.f}</span><span>Tecla ${i+1}</span></div><h3>${m.t}</h3><p style="margin:0;color:var(--mu)">${m.d}</p><ul>${m.b.map(x=>`<li>${x}</li>`).join('')}</ul><span class="go">Abrir simulador →</span></button>`).join('');
+const burst=()=>{for(let i=0;i<26;i++){const e=document.createElement('span');e.className='cf';e.textContent=['✨','🎉','⭐','💜'][i%4];e.style.setProperty('--x',(Math.random()*520-260)+'px');e.style.setProperty('--y',(Math.random()*-260-40)+'px');document.body.appendChild(e);setTimeout(()=>e.remove(),1300)}};
+const PH=['Diagnóstico','Compromiso y liderazgo','Planificación y diseño','Capacitación','Despliegue y ejecución','Verificación y evaluación','Mejora continua'],MAP={0:0,1:1,2:2,4:3,5:4},vis=new Set();
+const route=()=>{H($('#route'),PH.map((n,i)=>{const m=MAP[i];return `<button class="nd ${m!=null?'sim':''} ${vis.has(m)?'vis':''}" ${m!=null?`data-m="${m}"`:'disabled'} aria-label="Fase ${i+1}: ${n}${m==null?' (sin simulador)':''}"><b>${vis.has(m)?'✓':i+1}</b>${n}</button>`}).join(''));
+$('#route').querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>open(+b.dataset.m));$('#pt').textContent=`Explorados ${vis.size} de ${M.length}`+(vis.size===M.length?' · ¡ruta completa! 🎉':'');$('#pb').style.width=vis.size*100/M.length+'%';if(vis.size===M.length&&!route.d){route.d=1;burst()}};
+let cur=-1;
+const open=i=>{cur=i;vis.add(i);$('#hub').hidden=true;$('#mod').hidden=false;$('#mt').textContent=M[i].f+' · '+M[i].t;$('#md').textContent=M[i].d;M[i].fn($('#mb'));scrollTo(0,0);$('#bk').focus()};
+const back=()=>{if(cur<0)return;const i=cur;cur=-1;route();$('#mod').hidden=true;$('#hub').hidden=false;$('#cards').children[i].focus()};
+$('#cards').querySelectorAll('.card').forEach(b=>b.onclick=()=>open(+b.dataset.i));$('#bk').onclick=back;
+route();addEventListener('keydown',e=>{if(e.metaKey||e.ctrlKey||e.altKey)return;if(e.key==='Escape')back();else if(cur<0&&/^[1-8]$/.test(e.key))open(+e.key-1)});
+</script></body></html>
